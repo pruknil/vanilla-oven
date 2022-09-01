@@ -1,9 +1,4 @@
-import React from "react";
 import {
-  Text,
-  Center,
-  useColorMode,
-  NativeBaseProvider,
   StorageManager, 
   ColorMode
 } from "native-base";
@@ -38,8 +33,8 @@ const ThemeHelper = {
     setTheme: function(arg){
       colorModeManager.set(arg?'light':'dark');
     },
-    helper3: function(param1, param2){
-
+    getColorModeManager: function(){
+      return colorModeManager
     }
 }
 

@@ -1,18 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Text,
   Center,
   useColorMode,
   NativeBaseProvider,
   extendTheme,
+  Box,
+  Button,
 } from "native-base";
 import { useFocusEffect } from '@react-navigation/native';
+import ThemeHelper from "../utils/Theme";
 
 function SettingsScreen() {
-  const {
-    colorMode,
-    toggleColorMode
-  } = useColorMode();
   useFocusEffect(
     React.useCallback(() => {
       // Do something when the screen is focused
@@ -24,8 +23,13 @@ function SettingsScreen() {
       };
     }, [])
   );
+  useEffect(() => {
+    console.debug('SettingsScreen is useEffect')
+
+  });
+  
   return (
-    <NativeBaseProvider  theme={extendTheme({  })}>
+    <NativeBaseProvider colorModeManager={ThemeHelper.getColorModeManager()}>
       <Center
         _dark={{ bg: "blueGray.900" }}
         _light={{ bg: "blueGray.50" }}
@@ -34,10 +38,8 @@ function SettingsScreen() {
       >
         <Text>Settings!</Text>
 
-        <Text bold fontSize="lg">
-            {colorMode}
-          </Text>
       </Center>
+      
     </NativeBaseProvider>
 
   );

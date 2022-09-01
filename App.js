@@ -1,24 +1,11 @@
 import React from "react";
-import {
-  Text,
-  Center,
-  useColorMode,
-  NativeBaseProvider,
-  extendTheme,
-  StorageManager, 
-  ColorMode
-} from "native-base";
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { useFocusEffect } from '@react-navigation/native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MapScreen from './src/screens/Map';
 import AccountScreen from './src/screens/Account';
 import HomeScreen from './src/screens/Home';
 import SettingsScreen from './src/screens/Settings';
-
-
-
 
 const Tab = createBottomTabNavigator();
 

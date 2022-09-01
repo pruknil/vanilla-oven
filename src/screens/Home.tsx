@@ -29,11 +29,8 @@ function HomeScreen({ navigation }) {
       }, [])
     );
 
-
-
-
     return (
-      <NativeBaseProvider theme={theme}>
+      <NativeBaseProvider colorModeManager={ThemeHelper.getColorModeManager()}>
         <Center
           _dark={{ bg: "blueGray.900" }}
           _light={{ bg: "blueGray.50" }}
@@ -74,10 +71,6 @@ function HomeScreen({ navigation }) {
   }
 
 
-
-// extend the theme
-export const theme = extendTheme({  });
-
 // Color Switch Component
 function ToggleDarkMode() {
     const { colorMode, toggleColorMode ,setColorMode} = useColorMode();
@@ -113,6 +106,7 @@ function ToggleDarkMode() {
             setColorMode(value)
         }
       );
-    
   }
+
+
   export default HomeScreen;
