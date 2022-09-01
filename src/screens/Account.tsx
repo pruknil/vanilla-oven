@@ -1,6 +1,18 @@
 import React from 'react';
 import { useFocusEffect } from '@react-navigation/native';
-import {Text, View} from 'react-native';
+import {
+  Text,
+  Link,
+  HStack,
+  Center,
+  Heading,
+  Switch,
+  useColorMode,
+  NativeBaseProvider,
+  extendTheme,
+  VStack,
+  Box,
+} from "native-base";
 function AccountScreen() {
     useFocusEffect(
       React.useCallback(() => {
@@ -14,9 +26,16 @@ function AccountScreen() {
       }, [])
     );
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <NativeBaseProvider>
+      <Center
+        _dark={{ bg: "blueGray.900" }}
+        _light={{ bg: "blueGray.50" }}
+        px={4}
+        flex={1}
+      >
         <Text>Account!</Text>
-      </View>
+        </Center>
+    </NativeBaseProvider>
     );
   }
 
