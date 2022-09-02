@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import MapView, { Marker } from 'react-native-maps';
 import { Text, View, Dimensions,StyleSheet} from 'react-native';
+import { Center, NativeBaseProvider } from 'native-base';
+import ThemeHelper from '../utils/Theme';
 
 function MapScreen() {
     const { width, height } = Dimensions.get('window');
@@ -32,8 +34,14 @@ function MapScreen() {
   
   
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Map!</Text>
+
+      <NativeBaseProvider colorModeManager={ThemeHelper.getColorModeManager()}>
+      <Center
+        _dark={{ bg: "blueGray.900" }}
+        _light={{ bg: "blueGray.50" }}
+        px={4}
+        flex={1}
+      >
         <View style={styles.container}>
           <MapView style={styles.map}
             initialRegion={{
@@ -49,7 +57,11 @@ function MapScreen() {
             </Marker>
           </MapView>
         </View>
-      </View>
+
+      </Center>
+      
+    </NativeBaseProvider>
+
     );
   }
 

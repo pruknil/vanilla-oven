@@ -11,6 +11,7 @@ import {
   extendTheme,
   VStack,
   Box,
+  View,
 } from "native-base";
 
 import NativeBaseIcon from "../../components/NativeBaseIcon";
@@ -37,6 +38,8 @@ function HomeScreen({ navigation }) {
           px={4}
           flex={1}
         >
+
+
           <VStack space={5} alignItems="center">
             <NativeBaseIcon />
             <Heading size="lg">Welcome to NativeBase</Heading>

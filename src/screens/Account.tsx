@@ -13,20 +13,21 @@ import {
   VStack,
   Box,
 } from "native-base";
+import ThemeHelper from '../utils/Theme';
 function AccountScreen() {
-    useFocusEffect(
-      React.useCallback(() => {
-        // Do something when the screen is focused
-        console.debug('AccountScreen is focused')
-        return () => {
-          console.debug('AccountScreen is unfocused')
-          // Do something when the screen is unfocused
-          // Useful for cleanup functions
-        };
-      }, [])
-    );
-    return (
-      <NativeBaseProvider>
+  useFocusEffect(
+    React.useCallback(() => {
+      // Do something when the screen is focused
+      console.debug('AccountScreen is focused')
+      return () => {
+        console.debug('AccountScreen is unfocused')
+        // Do something when the screen is unfocused
+        // Useful for cleanup functions
+      };
+    }, [])
+  );
+  return (
+    <NativeBaseProvider colorModeManager={ThemeHelper.getColorModeManager()}>
       <Center
         _dark={{ bg: "blueGray.900" }}
         _light={{ bg: "blueGray.50" }}
@@ -34,9 +35,9 @@ function AccountScreen() {
         flex={1}
       >
         <Text>Account!</Text>
-        </Center>
+      </Center>
     </NativeBaseProvider>
-    );
-  }
+  );
+}
 
-  export default AccountScreen;
+export default AccountScreen;
