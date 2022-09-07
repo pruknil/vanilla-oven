@@ -17,7 +17,9 @@ import {
 import NativeBaseIcon from "../../components/NativeBaseIcon";
 import { useFocusEffect } from '@react-navigation/native';
 import ThemeHelper from "../utils/Theme";
+import { useTranslation } from "../hooks/useTranslation";
 function HomeScreen({ navigation }) {
+  const {t} = useTranslation();
     useFocusEffect(
       React.useCallback(() => {
         // Do something when the screen is focused
@@ -42,7 +44,7 @@ function HomeScreen({ navigation }) {
 
           <VStack space={5} alignItems="center">
             <NativeBaseIcon />
-            <Heading size="lg">Welcome to NativeBase</Heading>
+            <Heading size="lg">{t('app.name')}</Heading>
             <HStack space={2} alignItems="center">
               <Text>Edit</Text>
               <Box

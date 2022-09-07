@@ -6,6 +6,7 @@ import MapScreen from './src/screens/Map';
 import AccountScreen from './src/screens/Account';
 import HomeScreen from './src/screens/Home';
 import SettingsScreen from './src/screens/Settings';
+import { TranslationProvider } from "./src/hooks/useTranslation";
 
 const Tab = createBottomTabNavigator();
 
@@ -61,9 +62,11 @@ function MyTabs() {
 
 export default function App() {
   return (
+    <TranslationProvider>
     <NavigationContainer>
       <MyTabs />
     </NavigationContainer>
+    </TranslationProvider>
   );
 }
 
