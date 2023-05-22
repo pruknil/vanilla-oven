@@ -34,7 +34,7 @@ const Signin = ({navigation}) => {
             />
             <View style={styles.link}>
                 <Text style={styles.text}>Dont have an account? </Text>
-                <TouchableOpacity onPress={() => {}}>
+                <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
                     <Text style={styles.text}>Sign up Here.</Text>
                 </TouchableOpacity>
             </View>

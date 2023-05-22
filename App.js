@@ -4,6 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Icon} from 'react-native-elements';
 import Signin from './src/screens/Signin';
+import SignUp from './src/screens/SignUp';
 import Tab1 from './src/screens/Tab1';
 import Tab2 from './src/screens/Tab2';
 import Tab3 from './src/screens/Tab3';
@@ -20,9 +21,9 @@ function AuthFlow() {
                 component={Signin}
             />
             <AuthStack.Screen
-                options={{headerShown: false}}
-                name="Signup"
-                component={Signin}
+                options={{headerShown: true}}
+                name="SignUp"
+                component={SignUp}
             />
         </AuthStack.Navigator>
     );
