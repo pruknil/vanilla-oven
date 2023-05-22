@@ -10,7 +10,8 @@ import Tab2 from './src/screens/Tab2';
 import Tab3 from './src/screens/Tab3';
 import {Provider as AuthProvider} from './src/context/AuthContext.js';
 import {Context as AuthContext} from './src/context/AuthContext';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useEffect, useState} from "react";
 const AuthStack = createStackNavigator();
 function AuthFlow() {
     return (
@@ -80,19 +81,20 @@ function HomeFlow() {
 
 const Stack = createStackNavigator();
 function App() {
-    const {state} = React.useContext(AuthContext);
-    console.log(state);
+    const {state, setState} = React.useContext(AuthContext);
+    useEffect(() => {
+    }, [])
+
     return (
         <NavigationContainer>
             <Stack.Navigator>
                 {state.token === null ? (
-                    <>
-                        <Stack.Screen
-                            options={{headerShown: false}}
-                            name="Auth"
-                            component={AuthFlow}
-                        />
-                    </>
+                    <Stack.Screen
+                        options={{headerShown: false}}
+                        name="Auth"
+                        component={AuthFlow}
+                    />
+
                 ) : (
                     <Stack.Screen
                         options={{headerShown: false}}
@@ -103,6 +105,7 @@ function App() {
             </Stack.Navigator>
         </NavigationContainer>
     );
+
 }
 
 export default () => {

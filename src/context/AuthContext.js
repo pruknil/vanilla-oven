@@ -1,4 +1,5 @@
 import createDataContext from './createDataContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const authReducer = (state, action) => {
     switch (action.type) {
@@ -24,20 +25,45 @@ const signup = dispatch => {
 const signin = dispatch => {
     return ({email, password}) => {
         // Do some API Request here
-        console.log('Signin');
-        dispatch({
-            type: 'signin',
-            payload: {
-                token: 'some access token here',
-                email,
-            },
-        });
+        const storeData = async () => {
+            try {
+                const jsonValue = JSON.stringify({
+                    token: password,
+                    email: email,
+                })
+                console.log(jsonValue)
+                await AsyncStorage.setItem('@token', jsonValue)
+            } catch (e) {
+                console.error(e)
+            }
+        }
+        storeData().then(r => {
+            dispatch({
+                type: 'signin',
+                payload: {
+                    token: password,
+                    email: email,
+                },
+            });
+        })
+
+
     };
 };
 
 const signout = dispatch => {
     return () => {
-        dispatch({type: 'signout'});
+        const removeData = async () => {
+            try {
+                await AsyncStorage.removeItem('@token')
+            } catch (e) {
+                console.error(e)
+            }
+        }
+        removeData().then(r => {
+            dispatch({type: 'signout'});
+        })
+
     };
 };
 
