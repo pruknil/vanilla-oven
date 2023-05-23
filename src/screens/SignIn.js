@@ -4,7 +4,7 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {Input, Button} from 'react-native-elements';
 import {Context as AuthContext} from '../context/AuthContext';
 
-const Signin = ({navigation}) => {
+const SignIn = ({navigation}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [emailValidError, setEmailValidError] = useState('');
@@ -45,15 +45,25 @@ const Signin = ({navigation}) => {
                 leftIcon={<Icon name="key" type="font-awesome" size={24} />}
                 secureTextEntry
             />
+
             <Button
                 title="Login"
-                type="clear"
+                type="solid"
                 onPress={() => {
                     signin({email, password});
                 }}
             />
+
             <View style={styles.link}>
-                <Text style={styles.text}>Dont have an account? </Text>
+                <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
+                    <Text style={styles.text}>Forgot password?</Text>
+                </TouchableOpacity>
+            </View>
+
+
+
+            <View style={styles.link}>
+                <Text style={styles.text}>Don't have an account? </Text>
                 <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
                     <Text style={styles.text}>Sign up Here.</Text>
                 </TouchableOpacity>
@@ -84,4 +94,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Signin;
+export default SignIn;

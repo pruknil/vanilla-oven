@@ -3,14 +3,14 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Icon} from 'react-native-elements';
-import Signin from './src/screens/Signin';
+import SignIn from './src/screens/SignIn';
 import SignUp from './src/screens/SignUp';
-import Tab1 from './src/screens/Tab1';
-import Tab2 from './src/screens/Tab2';
-import Tab3 from './src/screens/Tab3';
+import ForgotPassword from './src/screens/ForgotPassword';
+import Tab1 from './src/screens/tabs/Tab1';
+import Tab2 from './src/screens/tabs/Tab2';
+import Tab3 from './src/screens/tabs/Tab3';
 import {Provider as AuthProvider} from './src/context/AuthContext.js';
 import {Context as AuthContext} from './src/context/AuthContext';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useEffect, useState} from "react";
 const AuthStack = createStackNavigator();
 function AuthFlow() {
@@ -18,13 +18,18 @@ function AuthFlow() {
         <AuthStack.Navigator>
             <AuthStack.Screen
                 options={{headerShown: false}}
-                name="Signin"
-                component={Signin}
+                name="SignIn"
+                component={SignIn}
             />
             <AuthStack.Screen
                 options={{headerShown: true}}
                 name="SignUp"
                 component={SignUp}
+            />
+            <AuthStack.Screen
+                options={{headerShown: true}}
+                name="ForgotPassword"
+                component={ForgotPassword}
             />
         </AuthStack.Navigator>
     );

@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import {Context as AuthContext} from '../context/AuthContext';
+import {Context as AuthContext} from '../../context/AuthContext';
 
 const Tab1 = ({navigation}) => {
     const {state} = useContext(AuthContext);
