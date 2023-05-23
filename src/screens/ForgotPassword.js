@@ -1,16 +1,48 @@
 import React, {useState, useContext} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {Context as AuthContext} from '../context/AuthContext';
+import {Button, Icon, Input} from "@rneui/themed";
+import Helper from "../utils/Helper";
 
 const ForgotPassword = ({navigation}) => {
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const {state, signin} = useContext(AuthContext);
+    const [emailValidError, setEmailValidError] = useState('');
+    const {state, forgot} = useContext(AuthContext);
 
     return (
         <View style={styles.master}>
-            <Text style={styles.header}>ForgotPassword</Text>
+            <Text style={styles.header}>Forgot Password?</Text>
+            <Input
+                placeholder="Email"
+                value={email}
+                leftIcon={<Icon name="envelope" type="font-awesome" size={24} />}
+                autoCapitalize='none'
+                errorStyle={{ color: 'red' }}
+                errorMessage={emailValidError}
+                autoCorrect={false}
+                onChangeText={value => {
+                    setEmail(value);
+                    Helper.validEmail(value,setEmailValidError);
+                }}
+            />
 
+
+            <Button
+                title="Submit"
+                type="solid"
+                onPress={() => {
+                    forgot({email});
+                }}
+            />
+
+
+
+            <View style={styles.link}>
+                <Text style={styles.text}>Don't have an account? </Text>
+                <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+                    <Text style={styles.text}>Sign up Here.</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 };
