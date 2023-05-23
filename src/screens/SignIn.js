@@ -1,7 +1,7 @@
 import React, {useState, useContext} from 'react';
-import {Icon} from 'react-native-elements';
+import {Icon} from '@rneui/themed';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import {Input, Button} from 'react-native-elements';
+import {Input, Button} from '@rneui/themed';
 import {Context as AuthContext} from '../context/AuthContext';
 
 const SignIn = ({navigation}) => {
