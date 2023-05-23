@@ -7,16 +7,36 @@ import {Context as AuthContext} from '../context/AuthContext';
 const Signin = ({navigation}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [emailValidError, setEmailValidError] = useState('');
     const {state, signin} = useContext(AuthContext);
+
+    const handleValidEmail = val => {
+        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+
+        if (val.length === 0) {
+            setEmailValidError('email address must be enter');
+        } else if (reg.test(val) === false) {
+            setEmailValidError('enter valid email address');
+        } else if (reg.test(val) === true) {
+            setEmailValidError('');
+        }
+    };
 
     return (
         <View style={styles.master}>
             <Text style={styles.header}>Auth Demo</Text>
             <Input
                 placeholder="Email"
-                onChangeText={setEmail}
                 value={email}
                 leftIcon={<Icon name="envelope" type="font-awesome" size={24} />}
+                autoCapitalize='none'
+                errorStyle={{ color: 'red' }}
+                errorMessage={emailValidError}
+                autoCorrect={false}
+                onChangeText={value => {
+                    setEmail(value);
+                    handleValidEmail(value);
+                }}
             />
             <Input
                 placeholder="Password"
