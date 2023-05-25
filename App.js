@@ -2,7 +2,6 @@ import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Icon} from '@rneui/themed';
 import SignIn from './src/screens/SignIn';
 import SignUp from './src/screens/SignUp';
 import ForgotPassword from './src/screens/ForgotPassword';
@@ -12,6 +11,19 @@ import Tab3 from './src/screens/tabs/Tab3';
 import {Provider as AuthProvider} from './src/context/AuthContext.js';
 import {Context as AuthContext} from './src/context/AuthContext';
 import {useEffect, useState} from "react";
+import Account from "./src/screens/tabs/Account";
+import { Icon,ThemeProvider, createTheme } from '@rneui/themed';
+
+const theme = createTheme({
+    lightColors: {
+     //   background: '#7dcbe8',
+    },
+    darkColors: {
+     //   background: '#631ce8',
+    },
+  //  mode: isDarkTheme,
+});
+//const isDarkTheme = theme === 'dark';
 const AuthStack = createStackNavigator();
 function AuthFlow() {
     return (
@@ -59,6 +71,11 @@ function HomeFlow() {
                                 ? 'ios-information-circle'
                                 : 'ios-information-circle-outline';
                             break;
+                        case 'Account':
+                            iconName = focused
+                                ? 'ios-information-circle'
+                                : 'ios-information-circle-outline';
+                            break;
                     }
 
                     // You can return any component that you like here!
@@ -80,6 +97,7 @@ function HomeFlow() {
             <Tab.Screen name="Tab1" component={Tab1} />
             <Tab.Screen name="Tab2" component={Tab2} />
             <Tab.Screen name="Tab3" component={Tab3} />
+            <Tab.Screen name="Account" component={Account} />
         </Tab.Navigator>
     );
 }
@@ -115,9 +133,11 @@ function App() {
 
 export default () => {
     return (
-        <AuthProvider>
-            <App />
-        </AuthProvider>
+        <ThemeProvider theme={theme}>
+            <AuthProvider>
+                <App />
+            </AuthProvider>
+        </ThemeProvider>
     );
 };
 
