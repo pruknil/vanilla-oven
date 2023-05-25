@@ -1,8 +1,8 @@
-import React, {useState, useContext} from 'react';
-import {Icon} from '@rneui/themed';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import {Input, Button} from '@rneui/themed';
+import React, {useContext, useState} from 'react';
+import {Button, Icon, Input} from '@rneui/themed';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Context as AuthContext} from '../context/AuthContext';
+import Helper from "../utils/Helper";
 
 const SignIn = ({navigation}) => {
     const [email, setEmail] = useState('');
@@ -10,39 +10,27 @@ const SignIn = ({navigation}) => {
     const [emailValidError, setEmailValidError] = useState('');
     const {state, signin} = useContext(AuthContext);
 
-    const handleValidEmail = val => {
-        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
-
-        if (val.length === 0) {
-            setEmailValidError('email address must be enter');
-        } else if (reg.test(val) === false) {
-            setEmailValidError('enter valid email address');
-        } else if (reg.test(val) === true) {
-            setEmailValidError('');
-        }
-    };
-
     return (
         <View style={styles.master}>
             <Text style={styles.header}>Auth Demo</Text>
             <Input
                 placeholder="Email"
                 value={email}
-                leftIcon={<Icon name="envelope" type="font-awesome" size={24} />}
+                leftIcon={<Icon name="envelope" type="font-awesome" size={24}/>}
                 autoCapitalize='none'
-                errorStyle={{ color: 'red' }}
+                errorStyle={{color: 'red'}}
                 errorMessage={emailValidError}
                 autoCorrect={false}
                 onChangeText={value => {
                     setEmail(value);
-                    handleValidEmail(value);
+                    Helper.validEmail(value, setEmailValidError);
                 }}
             />
             <Input
                 placeholder="Password"
                 onChangeText={setPassword}
                 value={password}
-                leftIcon={<Icon name="key" type="font-awesome" size={24} />}
+                leftIcon={<Icon name="key" type="font-awesome" size={24}/>}
                 secureTextEntry
             />
 
@@ -59,7 +47,6 @@ const SignIn = ({navigation}) => {
                     <Text style={styles.text}>Forgot password?</Text>
                 </TouchableOpacity>
             </View>
-
 
 
             <View style={styles.link}>
