@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import {View, Text, StyleSheet, ScrollView, TouchableHighlight} from 'react-native';
 import {Context as AuthContext} from '../../context/AuthContext';
 import {useTheme, useThemeMode} from '@rneui/themed';
 import {Avatar, Button, ListItem, makeStyles} from "@rneui/base";
@@ -12,10 +12,9 @@ const Account = ({navigation}) => {
 
     }, []);
 
-
     return (
         <ScrollView style={{...styles.master, backgroundColor: theme.colors.background}}>
-            <ListItem containerStyle={{height: 70, backgroundColor: theme.colors.grey5,borderRadius:10 }}>
+            <ListItem containerStyle={{height: 70, backgroundColor: theme.colors.grey5,borderRadius:10 }} Component={TouchableHighlight} onPress={() => navigation.navigate("Profile")}>
                 <Avatar size={55}
                     rounded
                     source={{ uri: 'https://randomuser.me/api/portraits/men/33.jpg' }}
@@ -31,7 +30,9 @@ const Account = ({navigation}) => {
                 </ListItem.Content>
                 <ListItem.Chevron style={{ color: theme.colors.black }} />
             </ListItem>
-            <Text style={{fontSize: 25, color: theme.colors.black}}>Welcome, {state.email}</Text>
+
+
+
             <Button radius={'md'} onPress={() => setMode(mode=='dark'?'light':'dark')} title={mode} />
             <Button
                 title="Sign out"

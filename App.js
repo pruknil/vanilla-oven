@@ -13,6 +13,7 @@ import {Context as AuthContext} from './src/context/AuthContext';
 import {useEffect, useState} from "react";
 import Account from "./src/screens/tabs/Account";
 import {Icon, ThemeProvider, createTheme, useTheme} from '@rneui/themed';
+import Profile from "./src/screens/tabs/Profile";
 
 
 const theme = createTheme({
@@ -111,11 +112,35 @@ function HomeFlow() {
             <Tab.Screen name="Home" component={Home} />
             <Tab.Screen name="Tab2" component={Tab2} />
             <Tab.Screen name="Tab3" component={Tab3} />
-            <Tab.Screen name="Account" component={Account} options={{headerShown: true}} />
+            <Tab.Screen name="Account" component={SettingsStackScreen} options={{headerShown: false}} />
         </Tab.Navigator>
     );
 }
 
+const SettingsStack = createStackNavigator();
+function SettingsStackScreen() {
+    const { theme } = useTheme();
+    return (
+        <SettingsStack.Navigator screenOptions={{
+            headerTitleStyle: {
+                fontWeight: "bold",
+                color: theme.colors.black,
+                fontSize: 25,
+            },
+            headerStyle: {
+                backgroundColor: theme.colors.white,
+            },
+            headerShadowVisible: false,
+            backgroundColor: theme.colors.grey5,
+            animationEnabled: true,
+            headerTitleAlign: 'left',
+
+        }}>
+            <SettingsStack.Screen name="Account" component={Account}  options={{headerShown: true}} />
+            <SettingsStack.Screen name="Profile" component={Profile}  options={{headerShown: true}} />
+        </SettingsStack.Navigator>
+    );
+}
 const Stack = createStackNavigator();
 function App() {
     const {state, setState} = React.useContext(AuthContext);
@@ -124,6 +149,7 @@ function App() {
 
     return (
         <NavigationContainer>
+
             <Stack.Navigator>
                 {state.token === null ? (
                     <Stack.Screen
