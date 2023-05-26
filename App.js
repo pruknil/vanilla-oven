@@ -12,7 +12,8 @@ import {Provider as AuthProvider} from './src/context/AuthContext.js';
 import {Context as AuthContext} from './src/context/AuthContext';
 import {useEffect, useState} from "react";
 import Account from "./src/screens/tabs/Account";
-import { Icon,ThemeProvider, createTheme } from '@rneui/themed';
+import {Icon, ThemeProvider, createTheme, useTheme} from '@rneui/themed';
+
 
 const theme = createTheme({
     lightColors: {
@@ -49,6 +50,7 @@ function AuthFlow() {
 
 const Tab = createBottomTabNavigator();
 function HomeFlow() {
+    const { theme } = useTheme();
     return (
         <Tab.Navigator
             screenOptions={({route}) => ({
@@ -73,31 +75,42 @@ function HomeFlow() {
                             break;
                         case 'Account':
                             iconName = focused
-                                ? 'ios-information-circle'
-                                : 'ios-information-circle-outline';
+                                ? 'ios-person'
+                                : 'ios-person-outline';
                             break;
                     }
 
                     // You can return any component that you like here!
                     return (
-                        <Icon name={iconName} type="ionicon" size={size} color={color} />
-                    );
+                        <Icon name={iconName} type="ionicon" size={size} color={color}/>
+                        );
                 },
                 "tabBarActiveTintColor": "tomato",
                 "tabBarInactiveTintColor": "gray",
                 "tabBarStyle": [
                     {
-                        "display": "flex"
+                        display: "flex",
+                        backgroundColor: theme.colors.white,
                     },
                     null
-                ]
+                ],
+                 headerTitleStyle: {
+                     fontWeight: "bold",
+                     color: theme.colors.black,
 
+                 },
+                headerStyle: {
+                    backgroundColor: theme.colors.white,
+                },
+                backgroundColor: theme.colors.grey5,
+                animationEnabled: true,
+                headerTitleAlign: 'left',
             })}
             >
             <Tab.Screen name="Tab1" component={Tab1} />
             <Tab.Screen name="Tab2" component={Tab2} />
             <Tab.Screen name="Tab3" component={Tab3} />
-            <Tab.Screen name="Account" component={Account} />
+            <Tab.Screen name="Account" component={Account} options={{headerShown: true}} />
         </Tab.Navigator>
     );
 }
