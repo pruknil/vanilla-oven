@@ -15,12 +15,11 @@ const Account = ({navigation}) => {
 
     return (
         <ScrollView style={{...styles.master, backgroundColor: theme.colors.background}}>
-
-            <ListItem containerStyle={{ backgroundColor: theme.colors.grey5,borderRadius:10 }}>
-                <Avatar size={"medium"}
+            <ListItem containerStyle={{height: 70, backgroundColor: theme.colors.grey5,borderRadius:10 }}>
+                <Avatar size={55}
                     rounded
                     source={{ uri: 'https://randomuser.me/api/portraits/men/33.jpg' }}
-                    avatarStyle={{ borderWidth: 2, borderColor: theme.colors.grey2, }}
+                    avatarStyle={{ borderWidth: 3, borderColor: theme.colors.grey2, }}
                 />
                 <ListItem.Content>
                     <ListItem.Title style={{ color: theme.colors.black, fontWeight: 'bold' }}>
@@ -67,7 +66,7 @@ const styles = StyleSheet.create({
         //alignItems: 'center',
         alignSelf: 'stretch',
        // textAlign: 'center',
-        paddingHorizontal: 5,
+        paddingHorizontal: 15,
     },
     header: {
         fontSize: 32,

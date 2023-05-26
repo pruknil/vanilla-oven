@@ -5,7 +5,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import SignIn from './src/screens/SignIn';
 import SignUp from './src/screens/SignUp';
 import ForgotPassword from './src/screens/ForgotPassword';
-import Tab1 from './src/screens/tabs/Tab1';
+import Home from './src/screens/tabs/Home';
 import Tab2 from './src/screens/tabs/Tab2';
 import Tab3 from './src/screens/tabs/Tab3';
 import {Provider as AuthProvider} from './src/context/AuthContext.js';
@@ -58,10 +58,10 @@ function HomeFlow() {
                     let iconName;
 
                     switch (route.name) {
-                        case 'Tab1':
+                        case 'Home':
                             iconName = focused
-                                ? 'ios-checkbox'
-                                : 'ios-checkbox-outline';
+                                ? 'ios-home'
+                                : 'ios-home-outline';
                             break;
                         case 'Tab2':
                             iconName = focused
@@ -97,17 +97,18 @@ function HomeFlow() {
                  headerTitleStyle: {
                      fontWeight: "bold",
                      color: theme.colors.black,
-
+                     fontSize: 25,
                  },
                 headerStyle: {
                     backgroundColor: theme.colors.white,
                 },
+                headerShadowVisible: false,
                 backgroundColor: theme.colors.grey5,
                 animationEnabled: true,
                 headerTitleAlign: 'left',
             })}
             >
-            <Tab.Screen name="Tab1" component={Tab1} />
+            <Tab.Screen name="Home" component={Home} />
             <Tab.Screen name="Tab2" component={Tab2} />
             <Tab.Screen name="Tab3" component={Tab3} />
             <Tab.Screen name="Account" component={Account} options={{headerShown: true}} />
