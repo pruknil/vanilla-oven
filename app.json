@@ -39,7 +39,12 @@
       "favicon": "./src/assets/favicon.png"
     },
     "plugins": [
-
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera."
+        }
+      ]
     ],
     "extra": {
       "eas": {

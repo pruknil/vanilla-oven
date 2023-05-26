@@ -1,8 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {View, Text, StyleSheet, ScrollView, TouchableHighlight} from 'react-native';
+import {View,  StyleSheet, ScrollView, TouchableHighlight} from 'react-native';
 import {Context as AuthContext} from '../../context/AuthContext';
 import {useTheme, useThemeMode} from '@rneui/themed';
-import {Avatar, Button, ListItem, makeStyles} from "@rneui/base";
+import {Avatar, Button, ListItem,Text, Icon} from "@rneui/base";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 const Account = ({navigation}) => {
     const {state,signout} = useContext(AuthContext);
@@ -31,9 +33,23 @@ const Account = ({navigation}) => {
                 <ListItem.Chevron style={{ color: theme.colors.black }} />
             </ListItem>
 
-
-
-            <Button radius={'md'} onPress={() => setMode(mode=='dark'?'light':'dark')} title={mode} />
+            <Text style={{color: theme.colors.black,fontWeight: 'bold',fontSize: 13,}}>Settings</Text>
+            <ListItem containerStyle={{...styles.listItems,backgroundColor: theme.colors.grey5}} Component={TouchableHighlight} onPress={() => {}}>
+                <MaterialIcons name="language" size={20} color={theme.colors.black} />
+                <ListItem.Content>
+                    <ListItem.Title style={{ color: theme.colors.black ,fontSize:12}}>Language</ListItem.Title>
+                </ListItem.Content>
+                <ListItem.Chevron style={{ color: theme.colors.black }} />
+            </ListItem>
+            <ListItem containerStyle={{...styles.listItems,backgroundColor: theme.colors.grey5}} Component={TouchableHighlight} onPress={() => setMode(mode=='dark'?'light':'dark')}>
+                {/*<Icon name="dark_mode" type={"material-community"} size={20} color={theme.colors.black}/>*/}
+                <MaterialCommunityIcons name="theme-light-dark" size={20} color={theme.colors.black} />
+                <ListItem.Content>
+                    <ListItem.Title style={{ color: theme.colors.black ,fontSize:12}}>Dark Mode</ListItem.Title>
+                </ListItem.Content>
+                <Text style={{ color: theme.colors.black }}>{mode}</Text>
+                <ListItem.Chevron style={{ color: theme.colors.black }} />
+            </ListItem>
             <Button
                 title="Sign out"
                 onPress={signout}
@@ -72,6 +88,7 @@ const styles = StyleSheet.create({
     header: {
         fontSize: 32,
     },
+    listItems:{height: 51,borderRadius:10 }
 });
 
 export default Account;

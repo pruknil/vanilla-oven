@@ -6,7 +6,7 @@ import SignIn from './src/screens/SignIn';
 import SignUp from './src/screens/SignUp';
 import ForgotPassword from './src/screens/ForgotPassword';
 import Home from './src/screens/tabs/Home';
-import Tab2 from './src/screens/tabs/Tab2';
+import MyCamera from './src/screens/tabs/MyCamera';
 import Tab3 from './src/screens/tabs/Tab3';
 import {Provider as AuthProvider} from './src/context/AuthContext.js';
 import {Context as AuthContext} from './src/context/AuthContext';
@@ -64,7 +64,7 @@ function HomeFlow() {
                                 ? 'ios-home'
                                 : 'ios-home-outline';
                             break;
-                        case 'Tab2':
+                        case 'Camera':
                             iconName = focused
                                 ? 'ios-add-circle'
                                 : 'ios-add-circle-outline';
@@ -74,7 +74,7 @@ function HomeFlow() {
                                 ? 'ios-information-circle'
                                 : 'ios-information-circle-outline';
                             break;
-                        case 'Account':
+                        case 'Setting':
                             iconName = focused
                                 ? 'ios-person'
                                 : 'ios-person-outline';
@@ -110,9 +110,9 @@ function HomeFlow() {
             })}
             >
             <Tab.Screen name="Home" component={Home} />
-            <Tab.Screen name="Tab2" component={Tab2} />
+            <Tab.Screen name="Camera" component={MyCamera} options={{unmountOnBlur: true}}/>
             <Tab.Screen name="Tab3" component={Tab3} />
-            <Tab.Screen name="Account" component={SettingsStackScreen} options={{headerShown: false}} />
+            <Tab.Screen name="Setting" component={SettingsStackScreen} options={{headerShown: false}} />
         </Tab.Navigator>
     );
 }
@@ -161,7 +161,7 @@ function App() {
                 ) : (
                     <Stack.Screen
                         options={{headerShown: false}}
-                        name="Home"
+                        name="NonAuth"
                         component={HomeFlow}
                     />
                 )}
