@@ -6,7 +6,7 @@ import SignIn from './src/screens/SignIn';
 import SignUp from './src/screens/SignUp';
 import ForgotPassword from './src/screens/ForgotPassword';
 import Home from './src/screens/tabs/Home';
-import MyCamera from './src/screens/tabs/MyCamera';
+import Cam from './src/screens/tabs/Cam';
 import Tab3 from './src/screens/tabs/Tab3';
 import {Provider as AuthProvider} from './src/context/AuthContext.js';
 import {Context as AuthContext} from './src/context/AuthContext';
@@ -66,8 +66,8 @@ function HomeFlow() {
                             break;
                         case 'Camera':
                             iconName = focused
-                                ? 'ios-add-circle'
-                                : 'ios-add-circle-outline';
+                                ? 'ios-camera'
+                                : 'ios-camera-outline';
                             break;
                         case 'Tab3':
                             iconName = focused
@@ -110,7 +110,7 @@ function HomeFlow() {
             })}
             >
             <Tab.Screen name="Home" component={Home} />
-            <Tab.Screen name="Camera" component={MyCamera} options={{unmountOnBlur: true}}/>
+            <Tab.Screen name="Camera" component={Cam} options={{unmountOnBlur: true}}/>
             <Tab.Screen name="Tab3" component={Tab3} />
             <Tab.Screen name="Setting" component={SettingsStackScreen} options={{headerShown: false}} />
         </Tab.Navigator>
