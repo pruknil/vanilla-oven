@@ -15,6 +15,7 @@ import Account from "./src/screens/tabs/Account";
 import {Icon, ThemeProvider, createTheme, useTheme} from '@rneui/themed';
 import Profile from "./src/screens/tabs/Profile";
 import Liveness from "./src/screens/tabs/Liveness";
+import {MaterialCommunityIcons} from "@expo/vector-icons";
 
 
 const theme = createTheme({
@@ -62,34 +63,34 @@ function HomeFlow() {
                     switch (route.name) {
                         case 'Home':
                             iconName = focused
-                                ? 'ios-home'
-                                : 'ios-home-outline';
+                                ? 'home'
+                                : 'home-outline';
                             break;
                         case 'Camera':
                             iconName = focused
-                                ? 'ios-camera'
-                                : 'ios-camera-outline';
+                                ? 'camera'
+                                : 'camera-outline';
                             break;
                         case 'Liveness':
                             iconName = focused
-                                ? 'ios-camera'
-                                : 'ios-camera-outline';
+                                ? 'face-man-shimmer'
+                                : 'face-man-shimmer-outline';
                             break;
                         case 'Tab3':
                             iconName = focused
-                                ? 'ios-information-circle'
-                                : 'ios-information-circle-outline';
+                                ? 'information'
+                                : 'information-outline';
                             break;
                         case 'Setting':
                             iconName = focused
-                                ? 'ios-person'
-                                : 'ios-person-outline';
+                                ? 'account'
+                                : 'account-outline';
                             break;
                     }
 
                     // You can return any component that you like here!
                     return (
-                        <Icon name={iconName} type="ionicon" size={size} color={color}/>
+                        <MaterialCommunityIcons name={iconName}  size={size} color={color}/>
                         );
                 },
                 "tabBarActiveTintColor": "tomato",
