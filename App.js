@@ -14,6 +14,7 @@ import {useEffect, useState} from "react";
 import Account from "./src/screens/tabs/Account";
 import {Icon, ThemeProvider, createTheme, useTheme} from '@rneui/themed';
 import Profile from "./src/screens/tabs/Profile";
+import Liveness from "./src/screens/tabs/Liveness";
 
 
 const theme = createTheme({
@@ -69,6 +70,11 @@ function HomeFlow() {
                                 ? 'ios-camera'
                                 : 'ios-camera-outline';
                             break;
+                        case 'Liveness':
+                            iconName = focused
+                                ? 'ios-camera'
+                                : 'ios-camera-outline';
+                            break;
                         case 'Tab3':
                             iconName = focused
                                 ? 'ios-information-circle'
@@ -111,6 +117,7 @@ function HomeFlow() {
             >
             <Tab.Screen name="Home" component={Home} />
             <Tab.Screen name="Camera" component={Cam} options={{unmountOnBlur: true}}/>
+            <Tab.Screen name="Liveness" component={Liveness} options={{unmountOnBlur: true}}/>
             <Tab.Screen name="Tab3" component={Tab3} />
             <Tab.Screen name="Setting" component={SettingsStackScreen} options={{headerShown: false}} />
         </Tab.Navigator>

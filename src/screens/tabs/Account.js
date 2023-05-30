@@ -42,7 +42,6 @@ const Account = ({navigation}) => {
                 <ListItem.Chevron style={{ color: theme.colors.black }} />
             </ListItem>
             <ListItem containerStyle={{...styles.listItems,backgroundColor: theme.colors.grey5}} Component={TouchableHighlight} onPress={() => setMode(mode=='dark'?'light':'dark')}>
-                {/*<Icon name="dark_mode" type={"material-community"} size={20} color={theme.colors.black}/>*/}
                 <MaterialCommunityIcons name="theme-light-dark" size={20} color={theme.colors.black} />
                 <ListItem.Content>
                     <ListItem.Title style={{ color: theme.colors.black ,fontSize:12}}>Dark Mode</ListItem.Title>
@@ -88,7 +87,10 @@ const styles = StyleSheet.create({
     header: {
         fontSize: 32,
     },
-    listItems:{height: 51,borderRadius:10 }
+    listItems:{
+        height: 51,
+        borderRadius:10,
+    }
 });
 
 export default Account;
