@@ -27,7 +27,7 @@ const Cam = ({navigation}) => {
         return <View/>;
     }
     if (status === null) {
-        requestPermissionMedia();
+        requestPermissionMedia().then(r => {});
     }
     if (requestPermission === false) {
         return <Text>No access to camera</Text>;
@@ -117,6 +117,7 @@ const Cam = ({navigation}) => {
 
         </View>);
 };
+
 const handleFacesDetected = ({faces}) => {
     //console.log(faces)
 
