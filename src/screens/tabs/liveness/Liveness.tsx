@@ -1,9 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {Dimensions, Platform, StyleSheet, View} from 'react-native';
 import {Text, useTheme} from "@rneui/themed";
-import {Camera, CameraType} from 'expo-camera';
+import {Camera, CameraType, FaceDetectionResult} from 'expo-camera';
 import * as FaceDetector from 'expo-face-detector';
-import {contains, Rect} from "./liveness/contains"
+import {contains, Rect} from "./contains"
 import MaskedView from "@react-native-community/masked-view";
 import {AnimatedCircularProgress} from "react-native-circular-progress"
 
@@ -47,6 +47,7 @@ const Liveness = ({navigation}) => {
     const [type, setType] = useState(CameraType.front);
     const [permission, requestPermission] = Camera.useCameraPermissions();
     const cameraRef = useRef(null)
+    const rollAngles = useRef<number[]>([])
     if (requestPermission === null) {
         return <View/>;
     }
@@ -55,10 +56,14 @@ const Liveness = ({navigation}) => {
         return <Text>No access to camera</Text>;
     }
 
-
     useEffect(() => {
-
-    }, []);
+        if (state.processComplete) {
+            setTimeout(() => {
+                // delay so we can see progress fill aniamtion (500ms)
+                navigation.goBack()
+            }, 750)
+        }
+    }, [state.processComplete])
     const onFacesDetected = (result: FaceDetectionResult) => {
         // 1. There is only a single face in the detection results.
         if (result.faces.length !== 1) {
@@ -108,7 +113,73 @@ const Liveness = ({navigation}) => {
             dispatch({type: "FACE_DETECTED", payload: "yes"})
         }
 
-        // TODO: Next section
+
+        const detectionAction = state.detectionsList[state.currentDetectionIndex]
+
+        switch (detectionAction) {
+            case "BLINK":
+                // Lower probabiltiy is when eyes are closed
+                const leftEyeClosed =
+                    face.leftEyeOpenProbability <= detections.BLINK.minProbability
+                const rightEyeClosed =
+                    face.rightEyeOpenProbability <= detections.BLINK.minProbability
+                if (leftEyeClosed && rightEyeClosed) {
+                    dispatch({type: "NEXT_DETECTION", payload: null})
+                }
+                return
+            case "NOD":
+                // Collect roll angle data
+                rollAngles.current.push(face.rollAngle)
+
+                // Don't keep more than 10 roll angles
+                if (rollAngles.current.length > 10) {
+                    rollAngles.current.shift()
+                }
+
+                // If not enough roll angle data, then don't process
+                if (rollAngles.current.length < 10) return
+
+                // Calculate avg from collected data, except current angle data
+                const rollAnglesExceptCurrent = [...rollAngles.current].splice(
+                    0,
+                    rollAngles.current.length - 1
+                )
+                const rollAnglesSum = rollAnglesExceptCurrent.reduce((prev, curr) => {
+                    return prev + Math.abs(curr)
+                }, 0)
+                const avgAngle = rollAnglesSum / rollAnglesExceptCurrent.length
+
+                // If the difference between the current angle and the average is above threshold, pass.
+                const diff = Math.abs(avgAngle - Math.abs(face.rollAngle))
+
+                // console.log(`
+                // avgAngle: ${avgAngle}
+                // rollAngle: ${face.rollAngle}
+                // diff: ${diff}
+                // `)
+                if (diff >= detections.NOD.minDiff) {
+                    dispatch({type: "NEXT_DETECTION", value: null})
+                }
+                return
+            case "TURN_HEAD_LEFT":
+                // Negative angle is the when the face turns left
+                if (face.yawAngle <= detections.TURN_HEAD_LEFT.maxAngle) {
+                    dispatch({type: "NEXT_DETECTION", payload: null})
+                }
+                return
+            case "TURN_HEAD_RIGHT":
+                // Positive angle is the when the face turns right
+                if (face.yawAngle >= detections.TURN_HEAD_RIGHT.minAngle) {
+                    dispatch({type: "NEXT_DETECTION", payload: null})
+                }
+                return
+            case "SMILE":
+                // Higher probabiltiy is when smiling
+                if (face.smilingProbability >= detections.SMILE.minProbability) {
+                    dispatch({type: "NEXT_DETECTION", payload: null})
+                }
+                return
+        }
     }
     return (
         <View style={{flex: 1, backgroundColor: theme.colors.background}}>
@@ -166,20 +237,20 @@ const Liveness = ({navigation}) => {
             <View style={styles.instructionsContainer}>
                 <Text style={styles.instructions}>
                     {state.faceDetected === "no" &&
-                    state.faceTooBig === "no" &&
-                    instructionsText.initialPrompt}
+                        state.faceTooBig === "no" &&
+                        instructionsText.initialPrompt}
 
                     {state.faceTooBig === "yes" && instructionsText.tooClose}
 
                     {state.faceDetected === "yes" &&
-                    state.faceTooBig === "no" &&
-                    instructionsText.performActions}
+                        state.faceTooBig === "no" &&
+                        instructionsText.performActions}
                 </Text>
                 <Text style={styles.action}>
                     {state.faceDetected === "yes" &&
-                    state.faceTooBig === "no" &&
-                    detections[state.detectionsList[state.currentDetectionIndex]]
-                        .instruction}
+                        state.faceTooBig === "no" &&
+                        detections[state.detectionsList[state.currentDetectionIndex]]
+                            .instruction}
                 </Text>
             </View>
         </View>

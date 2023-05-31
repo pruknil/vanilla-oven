@@ -14,7 +14,7 @@ import {useEffect, useState} from "react";
 import Account from "./src/screens/tabs/Account";
 import {Icon, ThemeProvider, createTheme, useTheme} from '@rneui/themed';
 import Profile from "./src/screens/tabs/Profile";
-import Liveness from "./src/screens/tabs/Liveness";
+import Liveness from "./src/screens/tabs/liveness/Liveness";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 
 
