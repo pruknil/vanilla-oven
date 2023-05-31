@@ -1,6 +1,6 @@
 import React, {useContext, useEffect} from 'react';
 import {Text, StyleSheet, ScrollView} from 'react-native';
-import {Context as AuthContext} from '../../context/AuthContext';
+import {Context as AuthContext} from '../../../context/AuthContext';
 import {useTheme} from "@rneui/themed";
 
 const Profile = ({navigation}) => {

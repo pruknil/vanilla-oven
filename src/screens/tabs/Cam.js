@@ -22,15 +22,29 @@ const Cam = ({navigation}) => {
     const [type, setType] = useState(CameraType.front);
     const [permission, requestPermission] = Camera.useCameraPermissions();
     const [status, requestPermissionMedia] = MediaLibrary.usePermissions();
+    const [flashMode, setFlashMode] = React.useState('off')
     const cameraRef = useRef(null)
     if (requestPermission === null) {
         return <View/>;
     }
     if (status === null) {
-        requestPermissionMedia().then(r => {});
+        requestPermissionMedia().then(r => {
+        });
     }
     if (requestPermission === false) {
         return <Text>No access to camera</Text>;
+    }
+
+
+    const _handleFlashMode = () => {
+        if (flashMode === 'on') {
+            setFlashMode('off')
+        } else if (flashMode === 'off') {
+            setFlashMode('on')
+        } else {
+            setFlashMode('auto')
+        }
+
     }
 
     function toggleCameraType() {
@@ -61,61 +75,81 @@ const Cam = ({navigation}) => {
 
     return (<View style={{flex: 1, backgroundColor: theme.colors.background}}>
 
-            <Camera
-                style={{flex: 1}}
-                type={type}
-                useCamera2Api={Platform.OS === 'ios'}
-                ratio={"16:9"} ref={cameraRef}
-                onFacesDetected={handleFacesDetected}
-                faceDetectorSettings={{
-                    mode: FaceDetector.FaceDetectorMode.fast,
-                    detectLandmarks: FaceDetector.FaceDetectorLandmarks.none,
-                    runClassifications: FaceDetector.FaceDetectorClassifications.none,
-                    minDetectionInterval: 100,
-                    tracking: true,
-                }}>
+        <Camera
+            style={{flex: 1}}
+            type={type}
+            useCamera2Api={Platform.OS === 'ios'}
+            ratio={"16:9"} ref={cameraRef}
+            onFacesDetected={handleFacesDetected}
+            flashMode={flashMode}
+            faceDetectorSettings={{
+                mode: FaceDetector.FaceDetectorMode.fast,
+                detectLandmarks: FaceDetector.FaceDetectorLandmarks.none,
+                runClassifications: FaceDetector.FaceDetectorClassifications.none,
+                minDetectionInterval: 100,
+                tracking: true,
+            }}>
 
 
+            <View
+                style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    flexDirection: 'column',
+                    flex: 1,
+                    width: '100%',
+                    padding: 20,
+                    justifyContent: 'space-around'
+                }}
+            >
                 <View
                     style={{
-                        position: 'absolute',
-                        bottom: 0,
-                        flexDirection: 'column',
-                        flex: 1,
-                        width: '100%',
-                        padding: 20,
-                        justifyContent: 'space-between'
-                    }}
-                >
-
-                    <TouchableOpacity transparent
-                                      style={{
-                                          flex: 1,
-                                          alignSelf: 'flex-start',
-                                          alignItems: 'center', //backgroundColor: theme.colors.grey5,
-                                      }}
-                                      onPress={toggleCameraType}>
+                        paddingVertical: 20,
+                        alignSelf: 'flex-start',
+                        //alignItems: 'center',
+                        //    backgroundColor: theme.colors.grey5,
+                    }}>
+                    <TouchableOpacity transparent onPress={toggleCameraType}>
                         <MaterialCommunityIcons name="camera-flip" size={40} color="white"/>
                     </TouchableOpacity>
+                </View>
+                <View
+                    style={{
+                        paddingVertical: 20,
+                        alignSelf: 'flex-start',
+                        //alignItems: 'center',
+                        //    backgroundColor: theme.colors.grey5,
+                    }}>
+                    <TouchableOpacity transparent onPress={_handleFlashMode}>
+                        <MaterialCommunityIcons name={flashMode === 'off' ? "flash-outline" : "flash"} size={40}
+                                                color="white"/>
+                    </TouchableOpacity>
+                </View>
+                <View style={{
+                    //alignSelf: 'center',
+                    alignItems: 'center',
+                    width: 'auto',//backgroundColor: theme.colors.grey5,
+                }}>
                     <TouchableOpacity transparent
                                       onPress={takePicture}
                                       style={{
-                                          flex: 1,
                                           width: 70,
                                           height: 70,
                                           bottom: 10,
                                           borderRadius: 50, //backgroundColor: theme.colors.grey5,
-                                          alignSelf: 'center', //alignItems: 'flex-end',
+                                          //alignSelf: 'center', //alignItems: 'flex-end',
                                       }}
                     >
                         <Icon name="camera" size={70} color="white"/>
                     </TouchableOpacity>
                 </View>
 
-            </Camera>
+            </View>
+
+        </Camera>
 
 
-        </View>);
+    </View>);
 };
 
 const handleFacesDetected = ({faces}) => {

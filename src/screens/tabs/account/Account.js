@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {View,  StyleSheet, ScrollView, TouchableHighlight} from 'react-native';
-import {Context as AuthContext} from '../../context/AuthContext';
+import {Context as AuthContext} from '../../../context/AuthContext';
 import {useTheme, useThemeMode} from '@rneui/themed';
 import {Avatar, Button, ListItem,Text, Icon} from "@rneui/base";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -33,7 +33,7 @@ const Account = ({navigation}) => {
                 <ListItem.Chevron style={{ color: theme.colors.black }} />
             </ListItem>
 
-            <Text style={{color: theme.colors.black,fontWeight: 'bold',fontSize: 13,}}>Settings</Text>
+            <Text style={{color: theme.colors.black,fontWeight: 'bold',fontSize: 13,paddingVertical:10,}}>Settings</Text>
             <ListItem containerStyle={{...styles.listItems,backgroundColor: theme.colors.grey5}} Component={TouchableHighlight} onPress={() => {}}>
                 <MaterialIcons name="language" size={20} color={theme.colors.black} />
                 <ListItem.Content>
@@ -47,6 +47,13 @@ const Account = ({navigation}) => {
                     <ListItem.Title style={{ color: theme.colors.black ,fontSize:12}}>Dark Mode</ListItem.Title>
                 </ListItem.Content>
                 <Text style={{ color: theme.colors.black }}>{mode}</Text>
+                <ListItem.Chevron style={{ color: theme.colors.black }} />
+            </ListItem>
+            <ListItem containerStyle={{...styles.listItems,backgroundColor: theme.colors.grey5}} Component={TouchableHighlight} onPress={() => setMode(mode=='dark'?'light':'dark')}>
+                <MaterialCommunityIcons name="key" size={20} color={theme.colors.black} />
+                <ListItem.Content>
+                    <ListItem.Title style={{ color: theme.colors.black ,fontSize:12}}>Pin & Password</ListItem.Title>
+                </ListItem.Content>
                 <ListItem.Chevron style={{ color: theme.colors.black }} />
             </ListItem>
             <Button

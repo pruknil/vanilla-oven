@@ -11,9 +11,9 @@ import Tab3 from './src/screens/tabs/Tab3';
 import {Provider as AuthProvider} from './src/context/AuthContext.js';
 import {Context as AuthContext} from './src/context/AuthContext';
 import {useEffect, useState} from "react";
-import Account from "./src/screens/tabs/Account";
+import Account from "./src/screens/tabs/account/Account";
 import {Icon, ThemeProvider, createTheme, useTheme} from '@rneui/themed';
-import Profile from "./src/screens/tabs/Profile";
+import Profile from "./src/screens/tabs/account/Profile";
 import Liveness from "./src/screens/tabs/liveness/Liveness";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 
