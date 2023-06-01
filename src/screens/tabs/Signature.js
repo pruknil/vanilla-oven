@@ -1,11 +1,12 @@
 import React, {useContext, useRef, useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import { Alert, StyleSheet, Text, View} from 'react-native';
 import {Button} from '@rneui/themed';
 import {Context as AuthContext} from '../../context/AuthContext';
 import ExpoPixi from 'expo-pixi'
 import {Card, Image} from "@rneui/base";
 import * as FileSystem from 'expo-file-system';
 import * as MediaLibrary from "expo-media-library";
+
 const Signature = ({navigation}) => {
     const {state, signout} = useContext(AuthContext);
     const [image, setImage] = useState(null);
@@ -22,9 +23,28 @@ const Signature = ({navigation}) => {
             return await new Promise(
                 async (expose) => {
                     const rawImage = await FileSystem.readAsStringAsync(signature_result.uri, {encoding: FileSystem.EncodingType.Base64});
-                     await MediaLibrary.saveToLibraryAsync(signature_result.localUri).then(
-                         expose(`data:image/png;base64,${rawImage}`)
-                     );
+                    expose(`data:image/png;base64,${rawImage}`)
+                    Alert.alert(
+                        "Are your sure?",
+                        "Do you want save signature to device",
+                        [
+                            // The "Yes" button
+                            {
+                                text: "Yes",
+                                onPress: async () => {
+                                    await MediaLibrary.saveToLibraryAsync(signature_result.localUri).then(() => {
+                                            alert("Saved")
+                                        }
+                                    );
+                                },
+                            },
+                            // The "No" button
+                            // Does nothing but dismiss the dialog when tapped
+                            {
+                                text: "No",
+                            },
+                        ]
+                    );
                 }
             );
         } else {
@@ -50,13 +70,13 @@ const Signature = ({navigation}) => {
             />
             <Card>
                 <ExpoPixi.Signature
-                    style={{ width: 150, height: 150 }}
+                    style={{width: 150, height: 150}}
                     ref={taskSignatureRef}
                     strokeWidth={3}
                     strokeAlpha={0.5}
                 />
             </Card>
-            <Button onPress={() => clearCanvas()} title="Reset" />
+            <Button onPress={() => clearCanvas()} title="Reset"/>
             <Button
                 onPress={() => {
                     saveCanvas().then((image) => setImage(image));
@@ -90,8 +110,9 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     image: {
-        height: 150,
-        width: 150,
+        width: '50%',
+        height: undefined,
+        aspectRatio: 1,
     },
 });
 
