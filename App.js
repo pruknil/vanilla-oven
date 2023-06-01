@@ -7,7 +7,7 @@ import SignUp from './src/screens/SignUp';
 import ForgotPassword from './src/screens/ForgotPassword';
 import Home from './src/screens/tabs/Home';
 import Cam from './src/screens/tabs/Cam';
-import Tab3 from './src/screens/tabs/Tab3';
+import Signature from './src/screens/tabs/Signature';
 import {Provider as AuthProvider} from './src/context/AuthContext.js';
 import {Context as AuthContext} from './src/context/AuthContext';
 import {useEffect, useState} from "react";
@@ -76,10 +76,10 @@ function HomeFlow() {
                                 ? 'face-man-shimmer'
                                 : 'face-man-shimmer-outline';
                             break;
-                        case 'Tab3':
+                        case 'Signature':
                             iconName = focused
-                                ? 'information'
-                                : 'information-outline';
+                                ? 'signature-freehand'
+                                : 'signature-freehand';
                             break;
                         case 'Setting':
                             iconName = focused
@@ -119,7 +119,7 @@ function HomeFlow() {
             <Tab.Screen name="Home" component={Home} />
             <Tab.Screen name="Camera" component={Cam} options={{unmountOnBlur: true}}/>
             <Tab.Screen name="Liveness" component={Liveness} options={{unmountOnBlur: true}}/>
-            <Tab.Screen name="Tab3" component={Tab3} />
+            <Tab.Screen name="Signature" component={Signature} />
             <Tab.Screen name="Setting" component={SettingsStackScreen} options={{headerShown: false}} />
         </Tab.Navigator>
     );
