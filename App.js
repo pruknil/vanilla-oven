@@ -7,6 +7,7 @@ import SignUp from './src/screens/SignUp';
 import ForgotPassword from './src/screens/ForgotPassword';
 import Home from './src/screens/tabs/Home';
 import Cam from './src/screens/tabs/Cam';
+import PayQR from './src/screens/tabs/PayQR';
 import Signature from './src/screens/tabs/Signature';
 import {Provider as AuthProvider} from './src/context/AuthContext.js';
 import {Context as AuthContext} from './src/context/AuthContext';
@@ -66,6 +67,11 @@ function HomeFlow() {
                                 ? 'home'
                                 : 'home-outline';
                             break;
+                        case 'PayQR':
+                            iconName = focused
+                                ? 'qrcode-scan'
+                                : 'qrcode-scan';
+                            break;
                         case 'Camera':
                             iconName = focused
                                 ? 'camera'
@@ -117,6 +123,7 @@ function HomeFlow() {
             })}
             >
             <Tab.Screen name="Home" component={Home} />
+            <Tab.Screen name="PayQR" component={PayQR} options={{unmountOnBlur: true}}/>
             <Tab.Screen name="Camera" component={Cam} options={{unmountOnBlur: true}}/>
             <Tab.Screen name="Liveness" component={Liveness} options={{unmountOnBlur: true}}/>
             <Tab.Screen name="Signature" component={Signature} />

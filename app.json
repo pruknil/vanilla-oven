@@ -10,6 +10,7 @@
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
     "userInterfaceStyle": "light",
+    "sdkVersion": "48.0.0",
     "splash": {
       "image": "./src/assets/splash.png",
       "resizeMode": "cover",
@@ -25,6 +26,7 @@
       "supportsTablet": true
     },
     "android": {
+
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
