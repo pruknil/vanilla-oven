@@ -27,6 +27,7 @@
     "expo": "^48.0.17",
     "expo-asset": "latest",
     "expo-face-detector": "~12.1.1",
+    "expo-file-system": "latest",
     "expo-font": "latest",
     "expo-gl": "^12.4.0",
     "expo-media-library": "^15.2.3",
@@ -45,8 +46,7 @@
     "react-native-svg": "13.4.0",
     "react-native-vector-icons": "^9.2.0",
     "react-native-view-shot": "3.5.0",
-    "typescript": "^4.9.4",
-    "expo-file-system": "latest"
+    "typescript": "^4.9.4"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
