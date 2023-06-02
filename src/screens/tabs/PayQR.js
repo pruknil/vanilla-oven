@@ -1,21 +1,20 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {View, Text, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
+import {ScrollView, StyleSheet, Text} from 'react-native';
 import {Context as AuthContext} from '../../context/AuthContext';
-import {Avatar, Button, ListItem} from "@rneui/base";
+import {Button} from "@rneui/base";
 import {useTheme} from "@rneui/themed";
 import * as Brightness from "expo-brightness";
 
 const PayQR = ({navigation}) => {
     const [bright, setBright] = useState(0);
     const {state} = useContext(AuthContext);
-    const { theme } = useTheme();
-    const { hours = 0, minutes = 0, seconds = 0 } = {hours:0, minutes: 15, seconds: 0};
+    const {theme} = useTheme();
+    const {hours = 0, minutes = 0, seconds = 0} = {hours: 0, minutes: 15, seconds: 0};
     const [[hrs, mins, secs], setTime] = React.useState([hours, minutes, seconds]);
 
 
     const tick = () => {
-        console.log(secs)
-        if (hrs === 0 && mins === 0 && secs === 0){
+        if (hrs === 0 && mins === 0 && secs === 0) {
             reset()
         } else if (mins === 0 && secs === 0) {
             setTime([hrs - 1, 59, 59]);
@@ -32,9 +31,9 @@ const PayQR = ({navigation}) => {
 
     useEffect(() => {
         (async (b) => {
-            const { status } = await Brightness.requestPermissionsAsync();
+            const {status} = await Brightness.requestPermissionsAsync();
             if (status === 'granted') {
-                const b = await Brightness.getSystemBrightnessAsync().then((bx)=>{
+                const b = await Brightness.getSystemBrightnessAsync().then((bx) => {
                     setBright(bx)
                     Brightness.setBrightnessAsync(1)
                 });
@@ -42,19 +41,21 @@ const PayQR = ({navigation}) => {
         })();
         const timerId = setInterval(() => tick(), 1000);
         return () => {
-            if(bright>0) {
+            if (bright > 0) {
                 Brightness.setBrightnessAsync(bright).then();
             }
             clearInterval(timerId);
         }
-    }, [bright,hrs, mins, secs]);
+    }, [bright, hrs, mins, secs]);
 
     return (
         <ScrollView style={{...styles.master, backgroundColor: theme.colors.background}}>
             <Text style={{fontSize: 25, color: theme.colors.black}}>{`${hrs.toString().padStart(2, '0')}:${mins
                 .toString()
                 .padStart(2, '0')}:${secs.toString().padStart(2, '0')}`}</Text>
-            <Button onPress={()=>{reset()} }>Reset</Button>
+            <Button onPress={() => {
+                reset()
+            }}>Reset</Button>
         </ScrollView>
     );
 };
