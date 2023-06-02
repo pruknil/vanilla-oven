@@ -28,25 +28,29 @@ const PayQR = ({navigation}) => {
 
     const reset = () => setTime([parseInt(hours), parseInt(minutes), parseInt(seconds)]);
 
-
     useEffect(() => {
         (async (b) => {
             const {status} = await Brightness.requestPermissionsAsync();
             if (status === 'granted') {
-                const b = await Brightness.getSystemBrightnessAsync().then((bx) => {
+                await Brightness.getSystemBrightnessAsync().then((bx) => {
                     setBright(bx)
-                    Brightness.setBrightnessAsync(1)
+                    Brightness.setBrightnessAsync(1).then(()=>{})
                 });
             }
         })();
-        const timerId = setInterval(() => tick(), 1000);
         return () => {
             if (bright > 0) {
                 Brightness.setBrightnessAsync(bright).then();
             }
+        }
+    }, [bright]);
+
+    useEffect(() => {
+        const timerId = setInterval(() => tick(), 1000);
+        return () => {
             clearInterval(timerId);
         }
-    }, [bright, hrs, mins, secs]);
+    }, [hrs, mins, secs]);
 
     return (
         <ScrollView style={{...styles.master, backgroundColor: theme.colors.background}}>
