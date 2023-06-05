@@ -1,17 +1,17 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {ScrollView, StyleSheet, Text} from 'react-native';
 import {Context as AuthContext} from '../../context/AuthContext';
 import {Button} from "@rneui/base";
 import {useTheme} from "@rneui/themed";
 import * as Brightness from "expo-brightness";
-
+import SvgQRCode from 'react-native-qrcode-svg';
 const PayQR = ({navigation}) => {
     const [bright, setBright] = useState(0);
     const {state} = useContext(AuthContext);
     const {theme} = useTheme();
     const {hours = 0, minutes = 0, seconds = 0} = {hours: 0, minutes: 15, seconds: 0};
     const [[hrs, mins, secs], setTime] = React.useState([hours, minutes, seconds]);
-
+    const [payToken, setPayToken] = useState("xxxx");
 
     const tick = () => {
         if (hrs === 0 && mins === 0 && secs === 0) {
@@ -26,7 +26,10 @@ const PayQR = ({navigation}) => {
     };
 
 
-    const reset = () => setTime([parseInt(hours), parseInt(minutes), parseInt(seconds)]);
+    const reset = () => {
+        setTime([parseInt(hours), parseInt(minutes), parseInt(seconds)])
+        setPayToken("ppppp")//<-regen
+    }
 
     useEffect(() => {
         (async (b) => {
@@ -34,7 +37,8 @@ const PayQR = ({navigation}) => {
             if (status === 'granted') {
                 await Brightness.getSystemBrightnessAsync().then((bx) => {
                     setBright(bx)
-                    Brightness.setBrightnessAsync(1).then(()=>{})
+                    Brightness.setBrightnessAsync(1).then(() => {
+                    })
                 });
             }
         })();
@@ -60,6 +64,7 @@ const PayQR = ({navigation}) => {
             <Button onPress={() => {
                 reset()
             }}>Reset</Button>
+            <SvgQRCode value={payToken} />
         </ScrollView>
     );
 };
