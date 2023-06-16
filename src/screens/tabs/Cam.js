@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
-import {Dimensions, Platform, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Dimensions, Platform, StyleSheet, TouchableOpacity, View,ActivityIndicator} from 'react-native';
 import {Context as AuthContext} from "../../context/AuthContext";
 import {Text, useTheme} from "@rneui/themed";
 import {Camera, CameraType} from 'expo-camera';
@@ -7,7 +7,10 @@ import * as FaceDetector from 'expo-face-detector';
 import * as MediaLibrary from 'expo-media-library';
 import {Icon} from "@rneui/base";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
-
+import { FancyAlert } from 'react-native-expo-fancy-alerts';
+import Ionicons from "react-native-vector-icons/Ionicons";
+import AppLoadingIndicator from "../../utils/AppLoadingIndicator";
+import AlertModal from "../../utils/AlertModal";
 const {width: windowWidth} = Dimensions.get("window")
 
 const PREVIEW_SIZE = 325
@@ -23,7 +26,9 @@ const Cam = ({navigation}) => {
     const [permission, requestPermission] = Camera.useCameraPermissions();
     const [status, requestPermissionMedia] = MediaLibrary.usePermissions();
     const [flashMode, setFlashMode] = React.useState('off')
+    const [alert, setAlert] = useState({show:false,text:""});
     const cameraRef = useRef(null)
+
     if (requestPermission === null) {
         return <View/>;
     }
@@ -62,7 +67,7 @@ const Cam = ({navigation}) => {
             const photo = await cameraRef.current.takePictureAsync();
             await MediaLibrary.saveToLibraryAsync(photo.uri);
             if (photo) {
-                alert("Saved!");
+                setAlert({show: true,text: "Saved"})
             }
         } catch (e) {
             console.log(e);
@@ -74,7 +79,7 @@ const Cam = ({navigation}) => {
     }, []);
 
     return (<View style={{flex: 1, backgroundColor: theme.colors.background}}>
-
+        <AlertModal state={alert} setAlert={setAlert}/>
         <Camera
             style={{flex: 1}}
             type={type}
@@ -176,7 +181,45 @@ const styles = StyleSheet.create({
         flex: 1, justifyContent: "center", alignItems: "center", marginTop: PREVIEW_RECT.minY + PREVIEW_SIZE
     }, action: {
         fontSize: 24, textAlign: "center", fontWeight: "bold"
-    }
+    },
+    alert: {
+        backgroundColor: '#EEEEEE',
+    },
+    icon: {
+        flex: 1,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#C3272B',
+        width: '100%',
+    },
+    content: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: -16,
+        marginBottom: 16,
+    },
+    contentText: {
+        textAlign: 'center',
+    },
+    btn: {
+        borderRadius: 32,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingVertical: 8,
+        alignSelf: 'stretch',
+        backgroundColor: '#4CB748',
+        marginTop: 16,
+        minWidth: '50%',
+        paddingHorizontal: 16,
+    },
+    btnText: {
+        color: '#FFFFFF',
+    },
 });
 
 export default Cam;
